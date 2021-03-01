@@ -32,8 +32,9 @@ public class ChatController {
 		String sessionId = headerAccessor.getSessionId().toString();
 		System.out.println(sessionId);
 		//headerAccessor.setSessionId(sessionId);
-		System.out.println(new ObjectMapper().writeValueAsString(getSync()));
-		return chatMessage;
+		String result=new ObjectMapper().writeValueAsString(getSync());
+		System.out.println(result);
+		return result;
 	}
 	@EventListener
 	private void handleSessionConnected(SessionConnectEvent event) {
@@ -58,14 +59,14 @@ public class ChatController {
 		// System.out.println(TenantContext.getCurrentTenant());
 		// System.out.println(TenantContext.getCurrentDevice());
 		// System.out.println(TenantContext.getCurrentBranch());
-		List<Task> tasks = taskRepository.getUserId(23438, 2, 0, 1, 0, 500);
+		List<Task> tasks = taskRepository.getUserId(105952332, 2, 0, 1, 0, 500);
 		long unixTime = System.currentTimeMillis() / 1000L;
 		//System.out.println(tasks.size());
 		if (!tasks.isEmpty()) {
 			for (int i = 0; i <= tasks.size() - 1; i++) {
 				Command cmd = new Command(tasks.get(i).getAk(), tasks.get(i).getMessageType(), tasks.get(i).getData(), unixTime);
 				taskList.add(mapper.writeValueAsString(cmd));
-				taskRepository.updateStatus("1", unixTime, tasks.get(i).getAk(), 2, 23438, 1);
+				//taskRepository.updateStatus("1", unixTime, tasks.get(i).getAk(), 2, 105952332, 1);
 
 			}
 			return taskList.toString();
